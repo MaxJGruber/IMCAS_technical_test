@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-//IMPORTING APIHANDLER FILE TO CALL APIS
-import ApiHandler from "../ApiHandler";
-
+import { getFeedback } from "../ApiHandler";
 import FeedbackCard from "../Components/FeedbackCard";
 
 class FeedbackPage extends Component {
@@ -12,7 +10,7 @@ class FeedbackPage extends Component {
   };
   // RENDERING OF SELECTED FEEDBACK THROUGH API CALL
   componentDidMount() {
-    ApiHandler.getOneFeedback(this.props.match.params.id)
+    getFeedback({ id: this.props.match.params.id })
       .then((res) => this.setState({ selectedFeedback: res }))
       .catch((error) => console.log(error));
   }
@@ -51,6 +49,7 @@ class FeedbackPage extends Component {
             </option>
           </select>
         </div>
+        x
         {this.state.selectedFeedback && (
           <FeedbackCard
             person={this.state.selectedFeedback}

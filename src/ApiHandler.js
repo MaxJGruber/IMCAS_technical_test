@@ -1,7 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios"
 
-// CREATING AN INSTANCE OF AXIOS TO TREAT HEADERS
 const service = axios.create({
     headers: { 'Access-Control-Allow-Origin': "*", "Content-Type": "application/json" },
     credentials: 'same-origin',
@@ -16,33 +15,13 @@ function errorHandler(error) {
     throw error
 }
 
-export default {
-    service,
-    // API CALL THAT WILL GET ORIGINAL PAGE OF FEEDBACK TO RENDER
-    async getAllFeedbacks() {
-        try {
-            const request = await service.get('https://api.imcas.com/v1/feedbacks')
-            return request.data;
-        } catch (error) {
-            errorHandler(error)
-        }
-    },
-    // API CALL FOR BONUS PAGINATION OF FEEDBACKS 
-    async getSelectedPageFeedbacks(page) {
-        try {
-            const request = await service.get(`https://api.imcas.com/v1/feedbacks?page=${page}`)
-            return request.data;
-        } catch (error) {
-            errorHandler(error)
-        }
-    },
-    // API CALL FOR SPECIFIC FEEDBACK
-    async getOneFeedback(id) {
-        try {
-            const request = await service.get(`https://api.imcas.com/v1/feedbacks/${id}`)
-            return request.data;
-        } catch (error) {
-            errorHandler(error)
-        }
-    },
+
+export async function getFeedback({ id, page }) {
+    const urlEnding = id ? `/${id}` : page ? `?page=${page}` : '';
+    try {
+        const { data } = await service.get(`https://api.imcas.com/v1/feedbacks${urlEnding}`)
+        return data;
+    } catch (error) {
+        errorHandler(error)
+    }
 }

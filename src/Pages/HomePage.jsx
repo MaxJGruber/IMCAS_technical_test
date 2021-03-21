@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-//IMPORTING APIHANDLER FILE TO CALL APIS
-import ApiHandler from "../ApiHandler.js";
-
+import { getFeedback } from "../ApiHandler.js";
 import FeedbackCard from "../Components/FeedbackCard";
 
 export default class HomePage extends Component {
@@ -13,7 +11,7 @@ export default class HomePage extends Component {
 
   // ORIGINAL RENDERING OF FIRST PAGE OF FEEDBACKS THROUGH API CALL
   componentDidMount() {
-    ApiHandler.getAllFeedbacks()
+    getFeedback({})
       .then((res) => this.setState({ feedbacks: res }))
       .catch((error) => console.log(error));
   }
@@ -21,18 +19,16 @@ export default class HomePage extends Component {
   // IF STATE OF PAGE NUMBER CHANGES, COMPONENT WILL UPDATE TO RENDER NEXT PAGE OF FEEDBACKS
   componentDidUpdate(prevProps, prevState) {
     if (this.state.page !== prevState.page) {
-      ApiHandler.getSelectedPageFeedbacks(this.state.page)
+      getFeedback({ page: this.state.page })
         .then((res) => this.setState({ feedbacks: res }))
         .catch((error) => console.log(error));
     }
   }
 
-  // FUNCTION TO INCREMENT PAGE NUMBER
   incrementPage = () => {
     this.setState({ page: this.state.page + 1 });
   };
 
-  // FUNCTION TO DECREMENT PAGE NUMBER
   decrementPage = () => {
     this.setState({ page: this.state.page - 1 });
   };

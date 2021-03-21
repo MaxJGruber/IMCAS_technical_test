@@ -1,6 +1,4 @@
 import { Route, Switch } from "react-router-dom";
-
-// IMPORTING OUR TWO VIEWS FOR ROUTING
 import HomePage from "./Pages/HomePage.jsx"
 import FeedbackPage from "./Pages/FeedbackPage.jsx"
 
