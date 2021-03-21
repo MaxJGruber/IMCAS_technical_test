@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  height: 50px;
+  width: 100px;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #8ecff4;
+  color: white;
+}
+
+.active {
+  background-color: gray;
+}
+
+.feedbacks-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-auto-rows: auto;
+  grid-gap: 10px;
+}

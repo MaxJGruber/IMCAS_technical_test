@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+
+// IMPORTING OUR TWO VIEWS FOR ROUTING
+import HomePage from "./Pages/HomePage.jsx"
+import FeedbackPage from "./Pages/FeedbackPage.jsx"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/feedback/:id" component={FeedbackPage} />
+      </Switch>
     </div>
   );
 }
