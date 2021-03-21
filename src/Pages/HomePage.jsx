@@ -8,14 +8,7 @@ export default class HomePage extends Component {
   state = {
     feedbacks: null,
     page: 1,
-  };
-
-  incrementPage = () => {
-    this.setState({ page: this.state.page + 1 });
-  };
-
-  decrementPage = () => {
-    this.setState({ page: this.state.page - 1 });
+    language: "en",
   };
 
   // ORIGINAL RENDERING OF FIRST PAGE OF FEEDBACKS THROUGH API CALL
@@ -33,6 +26,21 @@ export default class HomePage extends Component {
         .catch((error) => console.log(error));
     }
   }
+
+  // FUNCTION TO INCREMENT PAGE NUMBER
+  incrementPage = () => {
+    this.setState({ page: this.state.page + 1 });
+  };
+
+  // FUNCTION TO DECREMENT PAGE NUMBER
+  decrementPage = () => {
+    this.setState({ page: this.state.page - 1 });
+  };
+
+  handleChange = (e) => {
+    this.setState({ language: e.target.value });
+  };
+
   render() {
     return (
       <div className="HomePage">
@@ -40,6 +48,33 @@ export default class HomePage extends Component {
           <h1>
             Please feel free to select one of these cards to find more details
           </h1>
+          <div className="language-input">
+            Choose a Language:&nbsp;
+            <select
+              name="language"
+              className="input"
+              onChange={this.handleChange}
+            >
+              <option value="-1" disabled>
+                Select a Language
+              </option>
+              <option value="en" onChange={this.handleChange}>
+                English
+              </option>
+              <option value="fr" onChange={this.handleChange}>
+                French
+              </option>
+              <option value="es" onChange={this.handleChange}>
+                Spanish
+              </option>
+              <option value="zh" onChange={this.handleChange}>
+                Mandarin
+              </option>
+              <option value="ru" onChange={this.handleChange}>
+                Russian
+              </option>
+            </select>
+          </div>
           <div id="buttons-group">
             <button
               onClick={this.decrementPage}
@@ -65,7 +100,12 @@ export default class HomePage extends Component {
           {this.state.feedbacks &&
             this.state.feedbacks.data &&
             this.state.feedbacks.data.map((person, key) => (
-              <FeedbackCard key={key} person={person} view="home-page" />
+              <FeedbackCard
+                key={key}
+                person={person}
+                view="home-page"
+                language={this.state.language}
+              />
             ))}
         </div>
       </div>

@@ -6,21 +6,18 @@ import { Link } from "react-router-dom";
 import truncate from "lodash/truncate";
 
 function FeedbackCard(props) {
-  // FUNCTIONS TO FIND ENGLISH TRANSLATIONS FROM ARRAY
 
-  function findingCorrectQuoteTranslation() {
-    return props.person.translations.find((elem) => elem.locale === "en");
-  }
-  function findingCorrectJobTranslation() {
-    return props.person.user.specialty.translations.find(
-      (elem) => elem.locale === "en"
+  // FUNCTION TO LOOK FOR SELECTED LANGUAGE GLOBALLY
+  // IF IT DOES NOT EXIST, DEFAULT LANGUAGE IS ENGLISH
+
+  function findCorrectTranslation(targetTranslationsArray) {
+    return (
+      targetTranslationsArray.find((elem) => elem.locale === props.language) ||
+      targetTranslationsArray.find((elem) => elem.locale === "en")
     );
   }
-  function findingCorrectCountryTranslation() {
-    return props.person.user.country.translations.find(
-      (elem) => elem.locale === "en"
-    );
-  }
+
+  const quote = findCorrectTranslation(props.person.translations);
 
   return (
     <div className="FeedbackCard-field">
@@ -42,31 +39,35 @@ function FeedbackCard(props) {
         <div className="person-info">
           <strong>{props.person.user.fullname}</strong>
           <span className="person-location">
-            &nbsp;-&nbsp;{findingCorrectJobTranslation().name}
+            &nbsp;-&nbsp;
+            {
+              findCorrectTranslation(props.person.user.specialty.translations)
+                .name
+            }
             ,&nbsp;
-            {findingCorrectCountryTranslation().name}
+            {
+              findCorrectTranslation(props.person.user.country.translations)
+                .name
+            }
           </span>
         </div>
         <div></div>
 
-        <div className="quote">
-          {findingCorrectQuoteTranslation().content.length <= 250 && (
-            <i>"{findingCorrectQuoteTranslation().content}"</i>
-          )}
-          {props.view === "feedback-page" && (
-            <i>"{findingCorrectQuoteTranslation().content}"</i>
-          )}
-          {props.view === "home-page" &&
-            findingCorrectQuoteTranslation().content.length > 250 && (
+        {quote && (
+          <div className="quote">
+            {quote.content.length <= 250 && <i>"{quote.content}"</i>}
+            {props.view === "feedback-page" && <i>"{quote.content}"</i>}
+            {props.view === "home-page" && quote.content.length > 250 && (
               <i>
                 "
-                {truncate(findingCorrectQuoteTranslation().content, {
+                {truncate(quote.content, {
                   length: 250,
                 })}
                 "
               </i>
             )}
-        </div>
+          </div>
+        )}
       </Link>
     </div>
   );

@@ -1,3 +1,28 @@
 .FeedbackPage {
   margin-top: 40px;
 }
+
+.language-input {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  height: 50px;
+  width: 150px;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #8ecff4;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  border-radius: 0.5em;
+  height: auto;
+  width: 150px;
+}
